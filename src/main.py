@@ -12,35 +12,68 @@ from test_classifiers import run_exps
 from hypertuning import random_grid
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
+import seaborn as sns
+from data_clean import detect_outliers
+from scipy.fft import fft
 
 if __name__ == "__main__":
-    alphanum = "abcdefghijklmnopqrstuvwxyz0123456789"
+    alphanum = "abcdefghijklmnopqrstuvwxyz0123456789"#cdefghijklmnopqrstuvwxyz0123456789"
     touchesspe = ["CTRL", "ENTER", "NOKEY", "SHIFT", "SPACE", "SUPPR"]
+    # touchesspe = []
     n = 0
     i = 0
     df = pd.DataFrame()
+    df_1 = pd.DataFrame()
+    #import pdb; pdb.set_trace()
     for c in alphanum:
         pics, info = get_pics_from_file("../input/Hackaton/data/pics_" + c + ".bin")
         n += len(pics)
-        df = df.append(generate_df(pics[0:int(len(pics) / 20)], c))
+        ff = []
+        # for pic in pics:
+        #     ff.append(fft(pic))
+        df_test = generate_df(pics, c)
+        df_temp = detect_outliers(df_test)
+        df_temp['label'] = c
+        df = df.append(df_temp)
+        df_1 = df_1.append(df_test)
+        
         i += 1
     for c in touchesspe:
         pics, info = get_pics_from_file("../input/Hackaton/data/pics_" + c + ".bin")
         n += len(pics)
-        df = df.append(generate_df(pics[0:int(len(pics) / 20)], c))
+        # for pic in pics:
+        #     ff.append(fft(pic))
+        df_test = generate_df(pics, c)
+        df_temp = detect_outliers(df_test)
+        df_temp['label'] = c
+        df = df.append(df_temp)
+        df_1 = df_1.append(df_test)
+        
         i += 1
     n /= i
     X = df[df.columns[:-1]]
     y = df['label']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4
-    )
+    X1 = df_test[df_test.columns[:-1]]
+    y1 = df_test['label']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
+    X_train1, X_test1, y_train1, y_test1 = train_test_split(X1, y1, test_size=0.1)
 
+    # import pdb; pdb.set_trace()
+    #detect_outliers(df)
+    
+
+
+    #print(df.skew())
+    # print(df.columns)
+    # sns.boxplot(x=df[16])
+    # plt.show()
+    
     #RandomForestClassifier
     clf = RandomForestClassifier()
-    #rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 3, verbose=2, random_state=42, n_jobs = -1)
+    # # #rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 3, verbose=2, random_state=42, n_jobs = -1)
     clf.fit(X_train, y_train)
     print("Accuracy on training set is : {}".format(clf.score(X_train, y_train)))
-    print("Accuracy on test set is : {}".format(clf.score(X_test, y_test))) #56            99.5
+    print("Accuracy on test set is : {}".format(clf.score(X_test1, y_test1))) #56            99.5
 
 
     #print(run_exps(X_train, y_train, X_test, y_test))
@@ -48,16 +81,16 @@ if __name__ == "__main__":
     #SGD Classifier
     # clf = make_pipeline(StandardScaler(),
     #     SGDClassifier(max_iter=100000, tol=1e-3))
-    # clf = 
+    # # # clf = 
     # clf.fit(X_train, y_train)
     # print("Accuracy on training set is : {}".format(clf.score(X_train, y_train)))
-    # print("Accuracy on test set is : {}".format(clf.score(X_test, y_test)))
+    # print("Accuracy on test set is : {}".format(clf.score(X_test1, y_test1)))
 
-    #pics_loginmdp, info = get_pics_from_file("../input/Hackaton/data/pics_LOGINMDP.bin")
+    pics_loginmdp, info = get_pics_from_file("../input/Hackaton/data/pics_LOGINMDP.bin")
     
     #print(y_test.iloc[0])
-    # y_pred = pd.DataFrame(clf.predict(pics_loginmdp))
-    # y_pred.to_csv("result.csv")
+    y_pred = pd.DataFrame(clf.predict(pics_loginmdp))
+    y_pred.to_csv("result_login3.csv")
 
     #Kneighbours
     # neigh = KNeighborsClassifier(n_neighbors=int(n))
@@ -65,7 +98,7 @@ if __name__ == "__main__":
 
     #SVC
     # clf = make_pipeline(StandardScaler(), SVC(gamma='auto'))
-    # #import pdb; pdb.set_trace()
+    # # #import pdb; pdb.set_trace()
     # clf.fit(X_train, y_train)
     # print("Accuracy on training set is : {}".format(clf.score(X_train, y_train)))
     # print("Accuracy on test set is : {}".format(clf.score(X_test, y_test)))
