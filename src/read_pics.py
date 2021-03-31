@@ -69,8 +69,7 @@ if __name__ == "__main__":
     # r = LinearRegression()
     # r.fit(np.array(range(1,info["nb_pics"]+1)).reshape(-1,1), pics[1])
     #plt.plot(np.arange(0, 18).reshape(-1,1), r.predict(np.arange(0, 18).reshape(-1,1)))
-    for i in range(len(pics)):
-        plt.plot(range(1,info["nb_pics"]+1), pics[i])
+    plt.plot(range(1,info["nb_pics"]+1), pics[2])
     plt.xlabel('numéro de pic')
     plt.ylabel('valeur du pic')
     plt.title('no key')
