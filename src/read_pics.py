@@ -61,8 +61,8 @@ def get_pics_from_file(filename):
     return tab_pics, info
 
 if __name__ == "__main__":
-    pics, info = get_pics_from_file("../input/Hackaton/data/pics_2.bin")
-    pics_2, info = get_pics_from_file("../input/Hackaton/data/pics_3.bin")
+    pics, info = get_pics_from_file("../input/Hackaton/data/pics_U.bin")
+    pics_2, info = get_pics_from_file("../input/Hackaton/data/pics_H.bin")
     #pics_, info = get_pics_from_file("../data/pics_LOGINMDP.bin")
     #import pdb; pdb.set_trace()
     ######### Pics ############
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     # r.fit(np.array(range(1,info["nb_pics"]+1)).reshape(-1,1), pics[1])
     #plt.plot(np.arange(0, 18).reshape(-1,1), r.predict(np.arange(0, 18).reshape(-1,1)))
     for i in range(len(pics)):
-        plt.plot(range(1,info["nb_pics"]+1), fft(pics[i]))
+        plt.plot(range(1,info["nb_pics"]+1), pics[i])
         peaks, _ = find_peaks(pics[i])
         #plt.plot(peaks + 1, pics[i][peaks], "x")
     plt.xlabel('numéro de pic')
@@ -84,8 +84,9 @@ if __name__ == "__main__":
     plt.grid(b=True, which='both')
     plt.figure(2)
     for i in range(len(pics_2)):
-        plt.plot(range(1,info["nb_pics"]+1), fft(pics_2[i]))
+        plt.plot(range(1,info["nb_pics"]+1), pics_2[i])
         peaks, _ = find_peaks(pics_2[i])
+    plt.grid(b=True, which='both')
         #plt.plot(peaks + 1, pics_2[i][peaks], "x")
     # #import pdb; pdb.set_trace()
     

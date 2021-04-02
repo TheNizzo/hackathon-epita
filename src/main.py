@@ -1,3 +1,4 @@
+from math import gamma
 from read_pics import get_pics_from_file
 from legacy import mean_from_pic, generate_df
 import matplotlib.pyplot as plt
@@ -15,6 +16,8 @@ from sklearn.neighbors import KNeighborsClassifier
 import seaborn as sns
 from data_clean import detect_outliers
 from scipy.fft import fft
+from sklearn.svm import LinearSVC
+from sklearn.naive_bayes import GaussianNB
 
 if __name__ == "__main__":
     alphanum = "abcdefghijklmnopqrstuvwxyz0123456789"#cdefghijklmnopqrstuvwxyz0123456789"
@@ -69,11 +72,11 @@ if __name__ == "__main__":
     # plt.show()
     
     #RandomForestClassifier
-    clf = RandomForestClassifier()
-    # # #rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 3, verbose=2, random_state=42, n_jobs = -1)
-    clf.fit(X_train, y_train)
-    print("Accuracy on training set is : {}".format(clf.score(X_train, y_train)))
-    print("Accuracy on test set is : {}".format(clf.score(X_test1, y_test1))) #56            99.5
+    # clf = RandomForestClassifier()
+    # # # # #rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 3, verbose=2, random_state=42, n_jobs = -1)
+    # clf.fit(X_train, y_train)
+    # print("Accuracy on training set is : {}".format(clf.score(X_train, y_train)))
+    # print("Accuracy on test set is : {}".format(clf.score(X_test1, y_test1))) #56            99.5
 
 
     #print(run_exps(X_train, y_train, X_test, y_test))
@@ -89,8 +92,7 @@ if __name__ == "__main__":
     pics_loginmdp, info = get_pics_from_file("../input/Hackaton/data/pics_LOGINMDP.bin")
     
     #print(y_test.iloc[0])
-    y_pred = pd.DataFrame(clf.predict(pics_loginmdp))
-    y_pred.to_csv("result_login3.csv")
+    
 
     #Kneighbours
     # neigh = KNeighborsClassifier(n_neighbors=int(n))
@@ -102,3 +104,18 @@ if __name__ == "__main__":
     # clf.fit(X_train, y_train)
     # print("Accuracy on training set is : {}".format(clf.score(X_train, y_train)))
     # print("Accuracy on test set is : {}".format(clf.score(X_test, y_test)))
+    # clf = make_pipeline(StandardScaler(),
+    #                  LinearSVC(random_state=0, tol=1e-4, max_iter=1000, dual=False))
+    # clf.fit(X_train, y_train)
+    # print("Accuracy on training set is : {}".format(clf.score(X_train, y_train)))
+    # print("Accuracy on test set is : {}".format(clf.score(X_test1, y_test1)))
+
+
+    #GNB
+    gnb = GaussianNB()
+    gnb.fit(X_train, y_train)
+    print("Accuracy on training set is : {}".format(gnb.score(X_train, y_train)))
+    print("Accuracy on test set is : {}".format(gnb.score(X_test1, y_test1)))
+
+    y_pred = pd.DataFrame(gnb.predict(pics_loginmdp))
+    y_pred.to_csv("result_login_gnb.csv")
