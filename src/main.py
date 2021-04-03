@@ -95,8 +95,8 @@ if __name__ == "__main__":
     
 
     #Kneighbours
-    # neigh = KNeighborsClassifier(n_neighbors=int(n))
-    # neigh.fit(X_train, y_train)
+    neigh = KNeighborsClassifier(n_neighbors=int(n))
+    neigh.fit(X_train, y_train)
 
     #SVC
     # clf = make_pipeline(StandardScaler(), SVC(gamma='auto'))
@@ -112,10 +112,10 @@ if __name__ == "__main__":
 
 
     #GNB
-    gnb = GaussianNB()
-    gnb.fit(X_train, y_train)
-    print("Accuracy on training set is : {}".format(gnb.score(X_train, y_train)))
-    print("Accuracy on test set is : {}".format(gnb.score(X_test1, y_test1)))
+    # gnb = GaussianNB()
+    # gnb.fit(X_train, y_train)
+    print("Accuracy on training set is : {}".format(neigh.score(X_train, y_train)))
+    print("Accuracy on test set is : {}".format(neigh.score(X_test1, y_test1)))
 
-    y_pred = pd.DataFrame(gnb.predict(pics_loginmdp))
-    y_pred.to_csv("result_login_gnb.csv")
+    # y_pred = pd.DataFrame(gnb.predict(pics_loginmdp))
+    # y_pred.to_csv("result_login_gnb.csv")
