@@ -33,7 +33,7 @@ def filter_out_noise(reader, correlations):
     result = []
     last_letter = None
     last_trame = 0
-    i = 0
+    i = 1
     
     while i < len(reader):
         if last_trame + 13 < int(reader[i][0]):
@@ -76,7 +76,7 @@ if __name__ == "__main__":
                     ['7', '8', '5'],
                     ['9', '6']]
 
-    with open("python/data.csv", newline='') as csvfile:
+    with open("result_login_gnb.csv", newline='') as csvfile:
         results = []
         reader = list(csv.reader(csvfile, delimiter = ',', quotechar='|'))
     

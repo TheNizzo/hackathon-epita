@@ -3,15 +3,10 @@ from read_pics import get_pics_from_file
 import numpy as np
 import pywt
 
+""" Wavelet transform sur la touche H """
 
-if __name__ == "__main__":
-    
-    #pics_nokey, info = get_pics_from_file("../input/Hackaton/data/pics_NOKEY.bin")
-    
-    
+if __name__ == "__main__": 
     pics_pad0, info = get_pics_from_file("../input/Hackaton/data/pics_H.bin")
-
-    
     list = [i for i in range(9)]
     list2 = [i for i in range(9, 18)]
     plot = [list, list2]
