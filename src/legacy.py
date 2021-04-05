@@ -9,9 +9,9 @@ def mean_from_pic(pics):
         arr[i] /= len(pics)
     return arr
 
-# mean_from_pic([[1, 2], [0, 1]])
 
 def generate_df(pics, label):
+    """Labellisation du dataset"""
     df =  pd.DataFrame.from_records(pics)
     df['label'] = label
     return df

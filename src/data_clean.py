@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
+"""Identification des valeurs aberrantes avec la règle 1,5 x écart interquartile"""
+
 def detect_outliers(df: pd.DataFrame):
     df = df.drop('label', 1)
     plt.figure(1)
@@ -12,17 +14,7 @@ def detect_outliers(df: pd.DataFrame):
         q1 = df[column].quantile(0.25)
         q3 = df[column].quantile(0.75)
         IQR = q3-q1
-        #print(df.describe())
         df1[column] = (df[column] < (q1 - 1.5 * IQR)) | (df[column] > (q3 + 1.5 * IQR))
     
     df = df[(df1 == True).sum(axis=1) <= 3]
-    # import pdb; pdb.set_trace()
     return df
-    # print(df.info())
-    # print(df)
-    # plt.figure(2)
-    # plt.subplot(111)
-    # for i in range(100):
-    #     df.iloc[i].plot.line()
-    # plt.show()
-    #df1.to_csv('result6.csv')

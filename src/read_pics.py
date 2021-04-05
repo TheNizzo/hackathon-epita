@@ -63,21 +63,15 @@ def get_pics_from_file(filename):
 if __name__ == "__main__":
     pics, info = get_pics_from_file("../input/Hackaton/data/pics_U.bin")
     pics_2, info = get_pics_from_file("../input/Hackaton/data/pics_H.bin")
-    #pics_, info = get_pics_from_file("../data/pics_LOGINMDP.bin")
-    #import pdb; pdb.set_trace()
     ######### Pics ############
     # NO KEY
     plt.figure(1)
     plt.subplot(111)
     pics = pics[:100]
     pics_2 = pics_2[:100]
-    # r = LinearRegression()
-    # r.fit(np.array(range(1,info["nb_pics"]+1)).reshape(-1,1), pics[1])
-    #plt.plot(np.arange(0, 18).reshape(-1,1), r.predict(np.arange(0, 18).reshape(-1,1)))
     for i in range(len(pics)):
         plt.plot(range(1,info["nb_pics"]+1), pics[i])
         peaks, _ = find_peaks(pics[i])
-        #plt.plot(peaks + 1, pics[i][peaks], "x")
     plt.xlabel('numéro de pic')
     plt.ylabel('valeur du pic')
     plt.title('no key')
@@ -87,22 +81,5 @@ if __name__ == "__main__":
         plt.plot(range(1,info["nb_pics"]+1), pics_2[i])
         peaks, _ = find_peaks(pics_2[i])
     plt.grid(b=True, which='both')
-        #plt.plot(peaks + 1, pics_2[i][peaks], "x")
-    # #import pdb; pdb.set_trace()
-    
-    # plt.xlabel('numéro de pic')
-    # plt.ylabel('valeur du pic')
-    # plt.title('no key')
-    # plt.ylim(0, 1.5)
-    # plt.grid(b=True, which='both')
-    # PAD-0
-    #plt.subplot(212)
-    #plt.plot(range(1,info["nb_pics"]+1), pics_pad0[0], 'ko')
-    # plt.xlabel('numéro de pic')
-    # plt.ylabel('valeur du pic')
-    # plt.title('PAD-0')
-    # plt.ylim(0, 1.5)
-    # plt.grid(b=True, which='both')
-    #
     plt.show()
     
