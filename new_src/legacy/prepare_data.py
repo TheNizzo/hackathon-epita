@@ -8,6 +8,7 @@ def generate_df(pics, label):
     return df
 
 def generate_dataset_dataframe(alphanum, touchesspe, clean_data=False):
+    """ Load les trames de touches des alphanum et touchesspe avec ou sans le cleaning de data (remove outliers)"""
     df_1 = pd.DataFrame()
     df_cleaned = pd.DataFrame()
     for c in alphanum:

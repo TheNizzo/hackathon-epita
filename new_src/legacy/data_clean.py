@@ -3,9 +3,8 @@ import pandas as pd
 
 
 def detect_outliers(df: pd.DataFrame):
+    """ Elimination des outliers par la methode des quartiles"""
     df = df.drop('label', 1)
-    for i in range(100):
-        df.iloc[i].plot.line()
     
     df1 = pd.DataFrame()
     for column in df.columns:
