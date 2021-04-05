@@ -76,7 +76,7 @@ if __name__ == "__main__":
                     ['7', '8', '5'],
                     ['9', '6']]
 
-    with open("result_login_gnb.csv", newline='') as csvfile:
+    with open("data.csv", newline='') as csvfile:
         results = []
         reader = list(csv.reader(csvfile, delimiter = ',', quotechar='|'))
     
